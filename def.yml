@@ -1,0 +1,62 @@
+package: "packet"
+packets:
+  - name: "P2PHello"
+    fields:
+      - name: "IntradomainRoutingProcotolID"
+        type: "uint8"
+      - name: "PDULength"
+        type: "uint16"
+      - name: "TLVs"
+        type: "TLV"
+        multiple: true
+        length: "PDULength"
+  - name: "AreaAddressesTLV"
+    fields:
+    - name: "Type"
+      type: "uint8"
+    - name: "Length"
+      type: "uint8"
+    - name: "LANAddresses"
+      type: "LANAddress"
+      multiple: true
+      length: "Length"
+  
+  - name: "LANAddress"
+    fields:
+      - name: "LANAddress"
+        type: "[6]byte"
+
+  - name: "ISSystemNeighborsTLV"
+    fields:
+      - name: "Type"
+        type: "uint8"
+      - name: "Length"
+        type: "uint8"
+      - name: "AreaAddressContainers"
+        type: "AreaAddressContainer"
+        multiple: true
+      
+  - name: "AreaAddressContainer"
+    fields:
+      - name: "AddressLength"
+        type: "uint8"
+      - name: "AreaAddress"
+        type: "[]byte"
+        count: "AddressLength"
+
+  - name: "NLRI"
+    fields:
+      - name: "Pfxlen"
+        type: "uint8"
+      - name: "Address"
+        type: "[16]byte"
+        length: "ceil(Pfxlen / 8)"
+
+  - name: "IP"
+    fields: 
+      - name: "low"
+        type: "uint64"
+      - name: "high"
+        type: "uint64"
+      - name: "family"
+        type: "uint8"
