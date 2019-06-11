@@ -105,8 +105,8 @@ func (pf *PacketField) generateStructSerialize(b *bytes.Buffer) {
 		fmt.Fprintf(b, "\tbuf.Write(x.%s)\n", pf.Name)
 	default:
 		if pf.Multiple {
-			fmt.Fprintf(b, "\tfor i := range %s {\n", pf.Name)
-			fmt.Fprintf(b, "\t	%s[i].Serialize(buf)\n", pf.Name)
+			fmt.Fprintf(b, "\tfor i := range x.%s {\n", pf.Name)
+			fmt.Fprintf(b, "\t	x.%s[i].Serialize(buf)\n", pf.Name)
 			fmt.Fprintf(b, "\t}\n")
 			return
 		}
